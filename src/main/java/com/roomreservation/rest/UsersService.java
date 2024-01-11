@@ -1,8 +1,8 @@
 package com.roomreservation.rest;
 
+import com.roomreservation.core.Users;
 import com.roomreservation.core.UsersRepository;
 import com.roomreservation.exceptions.UserAlreadyExistException;
-import com.roomreservation.rest.dto.RegisterRequestData;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -15,15 +15,23 @@ public class UsersService {
     }
 
 //    public void register(RegisterRequestData newUser) {
-    public void register(RegisterRequestData newUser) {
-        if (usersRepository.findByEmail(newUser.email()).isPresent() ||
-                usersRepository.findByPhoneNumber(newUser.phoneNumber()).isPresent())
+//    public void register(RegisterRequestData newUser) {
+//        if (usersRepository.findByEmail(newUser.email()).isPresent() ||
+//                usersRepository.findByPhoneNumber(newUser.phoneNumber()).isPresent())
+//            throw new UserAlreadyExistException();
+//
+//        usersRepository.save(newUser.toEntity());
+//    }
+
+    public void register(Users newUser) {
+        if (usersRepository.findByEmail(newUser.getEmail()).isPresent() ||
+                usersRepository.findByPhoneNumber(newUser.getPhoneNumber()).isPresent())
             throw new UserAlreadyExistException();
 
-        usersRepository.save(newUser.toEntity());
+        usersRepository.save(newUser);
     }
 
-    public void update(Integer id, RegisterRequestData updatedUser) {
+    public void update(Integer id, Users updatedUser) {
     }
 
     public void delete(Integer id) {

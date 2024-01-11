@@ -1,6 +1,6 @@
 package com.roomreservation.rest;
 
-import com.roomreservation.rest.dto.RegisterRequestData;
+import com.roomreservation.core.Users;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
@@ -39,51 +39,51 @@ public class UsersServiceController {
             @ApiResponse(responseCode = "400", description = "Użytkownik z podanym adresem e-mail już istnieje"),
             @ApiResponse(responseCode = "500", description = "Błąd serwera")
     })
-    public HttpResponse<?> registerUser(@Body @Valid RegisterRequestData newUser) {
+    public HttpResponse<?> registerUser(@Body @Valid Users newUser) {
         usersService.register(newUser);
         return HttpResponse.status(HttpStatus.OK).body("Stworzono");
     }
 
-    @Get("/{userId}")
-    @Operation(summary = "Zwraca dane użytkownika o podanym ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Sukces"),
-            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
-            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
-            @ApiResponse(responseCode = "403", description = "Brak dostępu"),
-            @ApiResponse(responseCode = "500", description = "Błąd serwera")
-    })
-    public HttpResponse<?> getUser(@PathVariable Long userId) {
-        //RegisterRequestData user = usersService.getUser(userData);
-        //return HttpResponse.ok(user);
-        return HttpResponse.ok(null);
-    }
-
-    @Patch("/{id}")
-    @Operation(summary = "Aktualizuje dane użytkownika o danym ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Sukces"),
-            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
-            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
-            @ApiResponse(responseCode = "500", description = "Błąd serwera"),
-            @ApiResponse(responseCode = "501", description = "Usługa jeszcze nie jest gotowa")
-    })
-    public HttpResponse<?> updateUser(@PathVariable Integer id, @Body @Valid RegisterRequestData updatedUser) {
-        usersService.update(id, updatedUser);
-        return HttpResponse.ok();
-    }
-
-    @Delete("/{id}")
-    @Operation(summary = "Usuwa użytkownika o danym ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Sukces"),
-            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
-            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
-            @ApiResponse(responseCode = "500", description = "Błąd serwera"),
-            @ApiResponse(responseCode = "501", description = "Usługa jeszcze nie jest gotowa")
-    })
-    public HttpResponse<Void> deleteUser(@PathVariable Integer id) {
-        usersService.delete(id);
-        return HttpResponse.noContent();
-    }
+//    @Get("/{userId}")
+//    @Operation(summary = "Zwraca dane użytkownika o podanym ID")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Sukces"),
+//            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
+//            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
+//            @ApiResponse(responseCode = "403", description = "Brak dostępu"),
+//            @ApiResponse(responseCode = "500", description = "Błąd serwera")
+//    })
+//    public HttpResponse<?> getUser(@PathVariable Long userId) {
+//        //RegisterRequestData user = usersService.getUser(userData);
+//        //return HttpResponse.ok(user);
+//        return HttpResponse.ok(null);
+//    }
+//
+//    @Patch("/{id}")
+//    @Operation(summary = "Aktualizuje dane użytkownika o danym ID")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Sukces"),
+//            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
+//            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
+//            @ApiResponse(responseCode = "500", description = "Błąd serwera"),
+//            @ApiResponse(responseCode = "501", description = "Usługa jeszcze nie jest gotowa")
+//    })
+//    public HttpResponse<?> updateUser(@PathVariable Integer id, @Body @Valid Users updatedUser) {
+//        usersService.update(id, updatedUser);
+//        return HttpResponse.ok();
+//    }
+//
+//    @Delete("/{id}")
+//    @Operation(summary = "Usuwa użytkownika o danym ID")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Sukces"),
+//            @ApiResponse(responseCode = "204", description = "Brak dostępnych zasobów spełniających kryteria"),
+//            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane w żądaniu"),
+//            @ApiResponse(responseCode = "500", description = "Błąd serwera"),
+//            @ApiResponse(responseCode = "501", description = "Usługa jeszcze nie jest gotowa")
+//    })
+//    public HttpResponse<Void> deleteUser(@PathVariable Integer id) {
+//        usersService.delete(id);
+//        return HttpResponse.noContent();
+//    }
 }

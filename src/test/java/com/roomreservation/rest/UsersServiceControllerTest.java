@@ -1,6 +1,6 @@
 package com.roomreservation.rest;
 
-import com.roomreservation.rest.dto.RegisterRequestData;
+import com.roomreservation.core.Users;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.restassured.http.ContentType;
@@ -20,22 +20,23 @@ public class UsersServiceControllerTest {
 
     @Test
     void testSuccessfulRegistration() {
-        RegisterRequestData newUser = new RegisterRequestData("John", "Doe", "john@example.com", "123456789", "USER");
+        Users newUser = new Users("John", "Doe", "john@example.com", "123456789", "USER");
 
         given().body(newUser)
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/register")
-                .then()
+                .then().log().all()
                 .statusCode(HttpStatus.OK.getCode());
     }
 
     @Test
     void testRegistrationWithInvalidData() {
-        RegisterRequestData newUser = new RegisterRequestData("", "", "invalid", "", "");
+        Users newUser = new Users("", "", "invalid", "", "");
 
         given().body(newUser)
                 .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .when()
                 .post("/register")
                 .then()
@@ -44,10 +45,11 @@ public class UsersServiceControllerTest {
 
     @Test
     void testRegistrationOfExistingUser() {
-        RegisterRequestData existingUser = new RegisterRequestData("ExistingUser", "User", "existing@example.com", "123456789", "USER");
+        Users existingUser = new Users("ExistingUser", "User", "existing@example.com", "123456789", "USER");
 
         given().body(existingUser)
                 .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .when()
                 .post("/register")
                 .then()

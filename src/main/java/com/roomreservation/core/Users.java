@@ -1,8 +1,12 @@
 package com.roomreservation.core;
 
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 
 
+@Introspected
+@Serdeable
 @Entity()
 @Table(name = "USERS")
 public class Users {
