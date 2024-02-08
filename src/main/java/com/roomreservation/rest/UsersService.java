@@ -3,7 +3,10 @@ package com.roomreservation.rest;
 import com.roomreservation.core.Users;
 import com.roomreservation.core.UsersRepository;
 import com.roomreservation.exceptions.UserAlreadyExistException;
+import com.roomreservation.rest.dto.RegisterRequestData;
 import jakarta.inject.Singleton;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Singleton
 public class UsersService {
@@ -14,26 +17,30 @@ public class UsersService {
         this.usersRepository = usersRepository;
     }
 
-//    public void register(RegisterRequestData newUser) {
-//    public void register(RegisterRequestData newUser) {
-//        if (usersRepository.findByEmail(newUser.email()).isPresent() ||
-//                usersRepository.findByPhoneNumber(newUser.phoneNumber()).isPresent())
-//            throw new UserAlreadyExistException();
-//
-//        usersRepository.save(newUser.toEntity());
-//    }
-
-    public void register(Users newUser) {
-        if (usersRepository.findByEmail(newUser.getEmail()).isPresent() ||
-                usersRepository.findByPhoneNumber(newUser.getPhoneNumber()).isPresent())
+    @Transactional
+    public void register(RegisterRequestData newUser) {
+        if (usersRepository.findByEmail(newUser.email()).isPresent() ||
+                usersRepository.findByPhoneNumber(newUser.phoneNumber()).isPresent())
             throw new UserAlreadyExistException();
 
-        usersRepository.save(newUser);
+        usersRepository.save(newUser.toEntity());
     }
 
-    public void update(Integer id, Users updatedUser) {
+    public RegisterRequestData getUser(Integer userId) {
+        Users user = usersRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        return RegisterRequestData.toDto(user);
     }
 
+    @Transactional
+    public void update(Integer id, RegisterRequestData newUser) {
+        usersRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        usersRepository.update(newUser.toEntity(id));
+    }
+
+    @Transactional
     public void delete(Integer id) {
+        usersRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        usersRepository.deleteById(id);
     }
+
 }

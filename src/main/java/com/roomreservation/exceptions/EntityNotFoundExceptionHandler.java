@@ -17,7 +17,7 @@ public class EntityNotFoundExceptionHandler  implements ExceptionHandler<EntityN
 
     @Override
     public HttpResponse<?> handle(HttpRequest request, EntityNotFoundException exception) {
-        LOGGER.log(Level.SEVERE, exception.toString());
-        return HttpResponse.status(HttpStatus.NOT_FOUND);
+        LOGGER.log(Level.INFO, exception.toString());
+        return HttpResponse.status(HttpStatus.NOT_FOUND).body("Brak dostępnych zasobów spełniających kryteria");
     }
 }
