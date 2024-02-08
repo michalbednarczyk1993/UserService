@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
 @OpenAPIDefinition(
     info = @Info(
-            title = "UserService",
-            version = "0.0"
+            title = "Users-Service",
+            version = "0.1"
     )
 )
 public class Application {

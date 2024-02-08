@@ -26,7 +26,8 @@ class UserServiceApplicationTest {
     @Test
     void openApi(@Client("/") HttpClient httpClient) {
         BlockingHttpClient client = httpClient.toBlocking();
-        Assertions.assertDoesNotThrow(() -> client.exchange("/swagger/Users-Service-0.1.yml"));
+        // Below name depends on @OpenAPIDefinition info which is generated in Application.java
+        Assertions.assertDoesNotThrow(() -> client.exchange("/swagger/users-service-0.1.yml"));
     }
 
     @Test
